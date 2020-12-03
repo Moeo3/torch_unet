@@ -58,7 +58,10 @@ class UNet(Module):
         for i in range(depth, 0):
             self.up_list.append(UpBlock(channels_in * conv_start_channels * pow(2, i), channels_in * conv_start_channels * pow(2, i - 1), acti))
         
-        self.out_block = ConvBlock(conv_start_channels, channels_out, Sigmoid())
+        self.out_block = Sequential(
+            Conv2d(conv_start_channels, channels_out, 1),
+            Sigmoid()
+        )
         
     
     def forward(self, inputs):
