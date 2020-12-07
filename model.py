@@ -18,7 +18,7 @@ class ConvBlock(Module):
         super(ConvBlock, self).__init__()
         self.conv_block = Sequential(
             Conv33(channels_in, channels_out, acti),
-            Conv33(channels_in, channels_out, acti)
+            Conv33(channels_out, channels_out, acti)
         )
     def forward(self, inputs):
         return self.conv_block(inputs)
@@ -77,8 +77,8 @@ class UNet(Module):
         next_inputs = self.in_block(inputs)
         concatenate_list = [next_inputs]
         for i in range(self.depth):
-            next_inputs = self.down_list[i](next_inputs)
+            next_inputs = self.down_blocks[i](next_inputs)
             concatenate_list.append(next_inputs)
         for i in range(self.depth):
-            next_inputs = self.up_list[i](next_inputs, concatenate_list[self.depth - i - 1])
+            next_inputs = self.up_blocks[i](next_inputs, concatenate_list[self.depth - i - 1])
         return self.out_block(next_inputs)
