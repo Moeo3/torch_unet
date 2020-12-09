@@ -4,7 +4,7 @@ import torch
 from torch.optim import Adam
 
 
-def unet_train(unet, dataloader, epoch = 3, check_points_path = 'checkpoints', save_path = "."):
+def unet_train(unet, dataloader, epoch = 3, check_points_path = 'checkpoints', save_path = os.getcwd()):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     unet = unet.double().to(device)
     unet.train()
@@ -51,6 +51,6 @@ def unet_train(unet, dataloader, epoch = 3, check_points_path = 'checkpoints', s
 
     pass
 
-if __name__ == "__main__":
-    unet_train(model.UNet(), data.train_data_load())
-    pass
+# if __name__ == "__main__":
+#     unet_train(model.UNet(), data.train_data_load())
+#     pass
